@@ -7,35 +7,55 @@ import './App.css'
 function App() {
   const { user } = useAuth()
   const [authModalOpen, setAuthModalOpen] = useState(false)
+  const [showEditor, setShowEditor] = useState(true)
 
   return (
     <div className="app">
-      <header className="app-header">
+      <div className="app-header">
         <h1>AI SEO Blog Generator</h1>
         {!user && (
-          <button onClick={() => setAuthModalOpen(true)}>
+          <button 
+            className="auth-button"
+            onClick={() => setAuthModalOpen(true)}
+          >
             Login to Save Posts
           </button>
         )}
-      </header>
+      </div>
 
-      <main className="main-content">
-        {user ? (
-          <>
-            <div className="editor-section">
-              {/* Your existing TipTap editor component */}
-            </div>
-            <PostList />
-          </>
-        ) : (
-          <div className="login-prompt">
-            <p>Please log in to save and manage your blog posts.</p>
-            <button onClick={() => setAuthModalOpen(true)}>
-              Login Now
-            </button>
+      <div className="layout-container">
+        <div className="main-content">
+          <div className="input-section">
+            {/* Your existing input section */}
           </div>
-        )}
-      </main>
+
+          {user && (
+            <div className="post-management">
+              <button 
+                className="toggle-editor-button"
+                onClick={() => setShowEditor(!showEditor)}
+              >
+                {showEditor ? 'Hide Editor' : 'Show Editor'}
+              </button>
+              {showEditor ? (
+                <div className="editor-section">
+                  {/* Your existing TipTap editor component */}
+                </div>
+              ) : (
+                <PostList />
+              )}
+            </div>
+          )}
+
+          <div className="output-section">
+            {/* Your existing output section */}
+          </div>
+        </div>
+
+        <div className="sidebar">
+          {/* Your existing sidebar content */}
+        </div>
+      </div>
 
       <AuthModal 
         isOpen={authModalOpen}
